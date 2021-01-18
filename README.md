@@ -1,30 +1,28 @@
-### [ReScience C](https://rescience.github.io/) article template
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4396275.svg)](https://doi.org/10.5281/zenodo.4396275)
 
-This repository contains the Latex (optional) template for writing a ReScience
-C article and the (mandatory) YAML metadata file. For the actual article,
-you're free to use any software you like as long as you enforce the proposed
-PDF style. A tool is available for the latex template that produces latex
-definitions from the metadata file. If you use another software, make sure that
-metadata and PDF are always synced.
+Replication of Recanatesi et al. (2015) "Neural Network Model of Memory Retrieval"
+==================================================================================
 
-You can also use overleaf with the [provided template](https://www.overleaf.com/read/kfrwdmygjyqw) but in this case, you'll have to enter `metadata.tex` manually.
+Replication authors: [Carlos de la Torre-Ortiz](https://github.com/c-torre) and [Aurélien Nioche](https://github.com/AurelienNioche/).
 
-#### Usage
+Original article: S. Recanatesi, M. Katkov, S. Romani, M. Tsodyks, Neural Network Model of Memory Retrieval, Frontiers in Computational Neuroscience. 9 (2015) 149. [doi:10.3389/fncom.2015.00149](https://doi.org/10.3389/fncom.2015.00149).
 
-For a submission, fill in information in
-[metadata.yaml](./metadata.yaml), modify [content.tex](content.tex)
-and type:
+Recanatesi *et al.* present a model of memory retrieval based on a Hopfield model for associative learning, with network dynamics that reflect associations between items due to semantic similarities.
 
-```bash
-$ make 
-```
+This repository contains the source of the [Rescience C](https://rescience.github.io/) article, based on their Overleaf [template](https://github.com/rescience/template).
+Code available at [c-torre/replication-recanatesi-2015](https://github.com/c-torre/replication-recanatesi-2015) as well as archived at Zenodo (check badge).
 
-This will produce an `article.pdf` using xelatex and provided font.
-
-
-After acceptance, you'll need to complete [metadata.yaml](./metadata.yaml) with information provided by the editor and type again:
+Usage
+-----
 
 ```bash
 $ make
 ```
 
+This will produce an `article.pdf` using xelatex and provided font.
+
+License
+-------
+
+Creative Commons Attribution (CC BY) license, as Rescience C all published works.
+Some files (e.g. fonts) have their own license.
