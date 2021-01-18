@@ -24,5 +24,5 @@ This will produce an `article.pdf` using xelatex and provided font.
 License
 -------
 
-Creative Commons Attribution (CC BY) license, as Rescience C all published works.
+Creative Commons Attribution (CC BY) license, as all Rescience C published works.
 Some files (e.g. fonts) have their own license.
