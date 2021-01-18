@@ -1,0 +1,48 @@
+\section{Discussion}
+
+Recanatesi \textit{et al.} \parencite{recanatesi2015} present a neural network model of long-term memory free recall.
+In this model, inhibitory oscillations drive network dynamics.
+Noise and memory item contiguity can change the active attractor.
+
+We were not able to replicate the model with the conditions of the original article.
+The original authors acknowledged several errors in their manuscript, making replication unlikely.
+Fortunately, collaboration with the original authors enabled to reach successful replication.
+
+Most changes involve a normalization in equation terms, leading to changes of several orders of magnitude.
+An error in the original article scaling both contiguity parameters corresponding to equations \ref{eq:weights_sam} and \ref{eq:population_weights_sam} in the reference paper.
+In the corrected version, a previously missing pre-factor provides correct normalization as reported in equations \ref{eq:weights_sam} and \ref{eq:population_weights_sam}.
+%\(\rfrac{\kappa}{N}\) is multiplying all sum in the weight matrix.
+
+Besides, the base values of several hyperparameters needed to be corrected as reflected in Table \ref{table:hyperparameters}.
+The following parameters were changed:
+\(\gamma\), \(\kappa\), \(\kappa_{f}\), and \(\kappa_{b}\).
+Parameters of the original article allowed to replicate of retrieval dynamics, but could not replicate the recall analysis.
+
+
+% Firstly, we tried to simulate the network with neurons as network nodes (subsection \ref{subsec:neuron_dynamics}), with only partial success.
+% This approach is heavy to compute and experiment with and is not the one used to produce the results in the original article.
+% We then tried to simulated with neuron populations as network nodes instead (subsection \ref{subsec:population_dynamics}), greatly scaling down the network computation time.
+% To achieve the original paper's results, we modified several equations % and introduced two new parameters.
+
+%%%%%%%%%%% Our changes
+% Current
+% Change of currents was defined using the fraction of neurons in population \(\pi\) respect to the total number of neurons: \(N_{\pi} \cdot N^{-1}\) in the original article.
+% This was changed to, scaling up multiplying by the number of neurons, resulting in \(N_{\pi}\) (Eq. \ref{eq:population_current}).
+% As a consequence, Eq. \ref{eq:discrete_population_currents} was modified as well, as it is directly derived from the former.
+% It describes the change of currents in a discrete time scale.
+
+% % Weights
+% Regarding the weights, the only modification we did is to scale down forward and backward contiguity parameters (we divided their value by the number of neurons; Eq. \ref{eq:population_weights_sam}).
+% Otherwise, associations between items was orders of magnitude above the regular network connectivity.
+
+% % Noise
+% Concerning the noise, each unit is subjected to uncorrelated Gaussian noise.
+% We considered that the calculation of noise for populations of neurons should imply a change in the standard deviation of the noise, by taking into account the number of neurons in the population (see Eq. \ref{eq:population_noise_sd}).
+%
+% The magnitude of noise values had to be adjusted with an extra parameter changed as well as the resulting values were not adequate to induce stable transitions between activation states of attractors (Eq. \ref{eq:noise}).
+
+% % Firing Rates
+% While all the described changes allowed for the desired network oscillatory behavior with transitions of memory items, the value of the firing rates still did not match those in the original article.
+% An extra replication parameter was introduced in the gain function (Eq. \ref{eq:population_firing_rates}) to scale these values and finally achieve replication. % pre reviews
+
+After applying the corrections in coordination with the original authors, we do not observe important differences with the original article, reporting a full replication of the original results.

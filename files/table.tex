@@ -1,0 +1,45 @@
+\begin{table}
+\begin{center}
+    \begin{tabular}{l l r}
+        Parameter & Description & Value \\
+        \hline % --------------------------
+        \\
+        \(N\) & Number of neurons & 100,000  \\
+        \(M\) & Number of memory patterns & 16 \\
+        \\
+        \(\tau\) & Decay time & 0.01 \\
+        \\
+        \(\theta\) & Gain function threshold & 0 \\
+        \(\gamma\) & Gain function exponent & \(1/3\) \\%\(\rfrac{1}{3}\) \\
+        \\
+        \(f\) & Sparsity & 0.10 \\
+        \(\kappa\) & Excitation parameter & 12,500 \\
+        % \(\kappa\) & Excitation parameter & 13,000 \\ pre reviews
+        \(\kappa_{f}\) & Forward contiguity & 1,500 \\
+        % \(\kappa_{f}\) & Forward contiguity & 700 \\ pre reviews
+        \(\kappa_{b}\) & Backward contiguity & 850 \\
+        % \(\kappa_{b}\) & Backward contiguity & 400 \\ pre reviews
+        \\
+        % \(\phi_{min}\) & Minimum inhibition parameter & 0.70 \\ pre reviews
+        \(\phi_{min}\) & Minimum inhibition parameter & 0.4 \\
+        % \(\phi_{max}\) & Maximum inhibition parameter & 1.06 \\ pre reviews
+        \(\phi_{max}\) & Maximum inhibition parameter & 1.2 \\
+        %\(t_{\phi}\) & Oscillation time & 1.00 \\
+        %\(p_{\phi}\) & Oscillation phase shift & 0.75 \\
+        \\
+        \(\mu\) & Noise mean & 0 \\
+        %\(\sigma\) & Noise standard deviation & 65\textsuperscript{\(\rfrac{1}{2}\)} \\
+        \(\sigma\) & Noise standard deviation & \(\sqrt{65}\) \\
+        \\
+        % \(\zeta\) & Current modulation parameter & 4.75 \\ pre reviews, should be 0
+        % \(\eta\) & Noise modulation parameter & 700.00 \\ pre reviews, should be 0
+        \\
+        \(t_{cont}\) & Simulation time, continuous & 450 \\
+        \(dt\) & Integration time step & 0.001 \\
+        \(r_{ini}\) & Initial encoding rate & 1 \\
+        \(r_{recall}\) & Recall activation threshold & 15
+    \end{tabular}
+    \caption{Hyperparameters and reference values}
+    \label{table:hyperparameters}
+\end{center}
+\end{table}

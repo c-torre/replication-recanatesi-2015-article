@@ -1,0 +1,339 @@
+\subsection{Neuron Dynamics}
+\label{subsec:neuron_dynamics}
+
+
+\subsubsection{Current}
+
+The original paper described the dynamics of neuron \(\nu_{i}\) as the change of its current \(c_{i}\) with time:
+
+        \begin{equation}
+            \tau \dot{c}_{i}(t) = - {c}_{i}(t) + \sum_{j=1}^{N} r_{j}(t) \cdot W_{i,j} + \xi_{i}(t)
+        \label{eq:continuous_dynamics} \end{equation}
+
+        where:
+
+        \begin{tabular}{l} \\
+            \(\tau \in \R\) is the decay time, \\
+            \(c \in \R\) is the synaptic current, \\
+            \(N \in \N\) is the network number of neurons, \\
+            \(W\) is the weight matrix, \\
+            \(r \in \R\) is the firing rates, \\
+            \(\xi \in \R\) is the Gaussian noise.
+        \label{tab:conditions_continuous_dynamics} \end{tabular}
+
+
+
+    The former equation can be discretized using the Euler method:
+
+        \begin{equation}
+            c_{i}(t+1) = -c_{i}(t) + \frac{dt}{\tau} \left[-c_{i}(t) + \sum_{j=1}^{N} r_{j}(t) \cdot W_{i,j} + \frac{\xi_{i}(t)}{\sqrt{dt}} \right]
+        \label{eq:discrete_dynamics} \end{equation}
+
+        where:
+
+        \begin{tabular}{l}
+            \(dt \in \R\) is the integration time step
+        \label{tab:conditions_discrete_dynamics} \end{tabular}
+
+\subsubsection{Firing Rates}
+
+Firing rates \(r\) of each neuron are calculated by the gain function \(g(c)\), a step function with sublinear behavior or a value of zero:
+
+        \begin{equation}
+            g(c) =
+            \begin{cases}
+                (c + \theta)^{\gamma}   & \text{if~} (c + \theta) > 0 \\
+                0                       & \text{if~} (c + \theta) \leq 0
+            \end{cases}
+        \label{eq:firing_rates} \end{equation}
+
+        where:
+
+        \begin{tabular}{l} \\
+            \(\theta \in \R\) is the gain function threshold, \\
+            \(\gamma \in \R_{<1}\) is the gain function exponent. \\
+        \label{tab:conditions_firing_rates} \end{tabular} \bigskip
+
+
+\subsubsection{Memory Patterns}
+
+Every memory is represented by a binary vector or pattern \(\boldsymbol{p}\) of size \(N\).
+Each element of this vector corresponds to the state \(s\) of each neuron \(\nu\) for that memory pattern.
+The value of this state is \(0\) if the neuron does not encode for that pattern and \(1\) if it does.
+
+The different states are stored in a \(M \times N\) matrix, with shape:
+
+    \[\bordermatrix{
+        ~ & \nu_1 & \nu_2 & \cdots & \nu_n  \cr
+        p_1 &  s_{1}^{1} & s_{2}^{1} & \cdots & s_{n}^{1}  \cr
+        p_2 &  1 & 0 & \cdots & 1  \cr
+        \vdots &  \vdots  & \vdots & \ddots & \vdots  \cr
+        p_m &  s_{1}^{m} & s_{2}^{m} & \cdots & s_{n}^{m}
+    }\]
+
+
+\subsubsection{Inhibition}
+
+
+    The network is subjected to periodic inhibition driven by a sine wave \(\phi(t)\), with the form:
+
+        % \begin{equation}
+        %      \begin{gathered}
+        %         A = \frac{1}{2} (\phi_{max} - \phi_{min}) \\
+        %         \phi(t) = A \left(1 + \frac{\phi_{min}}{A} + \sin\left[
+        %         2 \pi \left(t + \frac{p_{\phi}}{dt}\right) \frac{1}{t_{\phi}} dt
+        %         \right] \right)
+        %      \end{gathered}
+        % \label{eq:sine_wave} \end{equation}
+
+        \begin{equation}
+            \frac{\phi_{max} - \phi_{min}}{2} \left[1 +  \sin \left(2 \pi t + \frac{\pi}{2} \right) \right]
+        \end{equation}
+        
+        where:
+
+        \begin{tabular}{l} \\
+            %\(A \in \R_{>0}\) is the amplitude, \\
+            \(\phi_{min} \in \R\) is the minimum inhibition hyperparameter, \\
+            \(\phi_{max} \in \R\) is the maximum inhibition hyperparameter, \\
+            %\(p_{\phi} \in \R\) is the oscillation phase shift, \\
+            %\(t_{\phi} \in \R\) is the oscillation time. \\
+        \label{tab:conditions_sine_wave} \end{tabular} \bigskip
+
+
+\subsubsection{Weights}
+
+
+    Each neuron in the network is fully connected to all the other neurons.
+    This gives a \(N \times N\) weight matrix \(\boldsymbol{W}_{i, j}\) representing the strength of connection or weight \(w\) between neurons \(\nu_{i}\) and \(\textit{}\nu_{j}\):
+
+    \[\bordermatrix{
+        ~ & \nu_1 & \nu_2 & \cdots & \nu_n  \cr
+        \nu_1 &  w_{1, 1} & w_{1, 2} & \cdots & w_{1, n}  \cr
+        \nu_2 &  w_{2, 1} & w_{2, 2} & \cdots & w_{2, n}  \cr
+        \vdots &  \vdots  & \vdots & \ddots & \vdots  \cr
+        \nu_m &  w_{m, 1} & w_{m, 2} & \cdots & w_{m, n}
+    }\] \bigskip
+
+
+
+    To calculate the weight matrix, the following Hebbian rule is used:
+
+        \begin{equation}
+            W_{i,j} = \frac{\kappa}{N} \left[ \sum_{p=1}^{M} (s_{i}^{p} - f) (s_{j}^{p} - f) - \phi(t) \right]
+        \label{eq:weights} \end{equation}
+
+        where:
+
+        \begin{tabular}{l} \\
+            \(\kappa \in \R_{\geqslant 0}\) is the excitation, \\
+            \(M \in \N\) is the number of memories, \\
+            \(s \in \Z_{[0, 1]}\) is the neuron state for a memory, \\
+            \(p\) is the memory pattern, \\
+            \(f \in \R\) is the sparsity, \\
+            \(\phi \in \R\) is the oscillatory inhibition.
+        \label{tab:conditions_weights} \end{tabular} \bigskip
+
+
+    To account for short term associations to the previous and next memories as in the SAM model, a new term \(\boldsymbol{W}_{i,j}^{*}\) is added to the original weight matrix:
+
+        \begin{equation}
+        W_{i, j}^{SAM} = W_{i, j} + W_{i, j}^{*} = W_{i, j} + \frac{\kappa}{N} \left[ \kappa_{f} \sum_{p=1}^{M-1} s_{i}^{p} \cdot s_{j}^{p+1} + \kappa_{b} \sum_{p=2}^{M} s_{i}^{p} \cdot s_{j}^{p-1} \right]
+        \label{eq:weights_sam} \end{equation}
+
+        where:
+
+        \begin{tabular}{l} \\
+            \(\kappa_{f} \in \R\) is the forward contiguity, \\
+            \(\kappa_{b} \in \R\) is the backward contiguity. \\
+        \label{tab:conditions_weights_sam} \end{tabular} \bigskip
+
+
+\subsubsection{Noise}
+
+
+    Each neuron is subjected to Gaussian noise \(\xi\), following the probability density function:
+
+        \begin{equation}
+            p(z) = \frac{1}{\sigma \sqrt{ 2 \pi}} e^{ - \frac{ (z - \mu)^2 } {2 \sigma^2} }
+        \label{eq:noise} \end{equation}
+
+        where:
+
+        \begin{tabular}{l} \\
+            \(\mu \in \R\) is the noise mean, \\
+            \(\sigma \in \R_{\geqslant 0}\) is the noise standard deviation.
+        \label{tab:conditions_noise} \end{tabular} \bigskip
+
+
+\subsection{Population Dynamics}
+\label{subsec:population_dynamics}
+
+    Simulating the network with the original parameters is very computationally expensive, with the computation time depending primarily on the number of neurons.
+    The system can be simplified, reducing the number of simulated units.
+    All neurons that present the same activation state for the different memories will be considered that belong to the same population \(\pi\).
+    Moreover, all these neurons have an identical weight matrix \(\boldsymbol{W}_{i, j}\)\footnote{\(i j\) notation refers to the simulated unit, which is from now on a population of neurons instead of the single neuron.}, which will be the weight matrix of the population.
+
+
+\subsubsection{Current}
+
+    A new term \(S_{\pi}\) is introduced in the calculation:
+
+        \begin{equation}
+            S_{\pi} = \frac{N_{\pi}}{N}
+        \label{eq:fraction_neurons_pop} \end{equation}
+
+        where:
+
+        \begin{tabular}{l} \\
+            \(N_{\pi} \in \N\) is the number of neurons in a population. \\
+        \label{tab:fraction_neurons_pop} \end{tabular} \bigskip
+
+
+    The change of current of population \(\pi_{i}\) with time is:
+
+        \begin{equation}
+            \tau \dot{c}_{i}(t) = - {c}_{i}(t) + \sum_{j=1}^{U} r_{j}(t) \cdot W_{i,j} \cdot S_{\pi} + \xi_{i}(t)
+        \label{eq:population_current} \end{equation}
+
+        where:
+
+        \begin{tabular}{l} \\
+            \(U \in \N\) is the number of unique populations. \\
+        \label{tab:conditions_population_current} \end{tabular} \bigskip
+
+
+    \medskip After discretizing by Euler:
+
+        \begin{equation}
+            c_{i}(t+1) = -c_{i}(t) + \frac{dt}{\tau} \left[- c_{i}(t) + \sum_{j=1}^{U} r_{j}(t) \cdot W_{i,j} \cdot S_{\pi} + \frac{\xi_{i}(t)}{\sqrt{dt}} \right]
+        \label{eq:discrete_population_currents} \end{equation}
+
+    % where:
+    % 
+    % \begin{tabular}{l} \\
+    %     \(\xi \in \R\) is the Gaussian noise adapted to populations.
+    % \label{tab:conditions_discrete_population_currents} \end{tabular}
+
+
+\subsubsection{Firing Rates}
+
+
+    % An extra parameter \(\zeta\) was introduced in the gain function to achieve replication:
+    Firing rates are calculated with the gain function as before. % with the following gain function:
+
+        % \begin{equation}
+        %     g(c) =
+        %     \begin{cases}
+        %         (c + \theta)^{\gamma}   & \text{if~} (c + \theta) > 0 \\
+        %         0                       & \text{if~} (c + \theta) \leq 0
+        %     \end{cases}
+        %     %\begin{cases}  hopefully no replication param
+        %     %    (c \cdot \zeta + \theta)^{\gamma}   & \text{if~} (c + \theta) > 0 \\
+        %     %    0                       & \text{if~} (c + \theta) \leq 0
+        %     %\end{cases}
+        % \label{eq:population_firing_rates} \end{equation}
+        % 
+        % where:
+        % 
+        % \begin{tabular}{l} \\
+        %     %\(\zeta \in \R\) is the current modulation parameter, \\  replication param
+        %     \(\theta \in \R\) is the gain function threshold, \\
+        %     \(\gamma \in \R_{<1}\) is the gain function exponent. \\
+        % \label{tab:conditions_population_firing_rates} \end{tabular} \bigskip
+
+
+\subsubsection{Memory Patterns}
+
+The \(M \times N\) matrix containing \(s\) states is now a \(M \times U\) matrix.
+This second matrix contains fewer elements than the original matrix, allowing for faster computation.
+
+
+\subsubsection{Inhibition}
+
+Inhibition calculation remains unchanged for the simulation with populations.
+
+
+\subsubsection{Weights}
+
+
+    The population weight matrix \(\boldsymbol{W}_{i, j}\) for neuron populations, with \(U \times U\) shape:
+
+        \begin{equation}
+            W_{i,j} = \frac{\kappa}{N} \left[\sum_{p=1}^{M} (u_{i}^{p} - f) (u_{j}^{p} - f) - \phi(t) \right]
+        \label{eq:population_weights} \end{equation}
+
+        \begin{equation}
+            W_{i, j}^{SAM} = W_{i, j} + W_{i, j}^{*} = W_{i,j} + \frac{\kappa}{N} \left[ \kappa_{f} \sum_{p=1}^{M-1} u_{i}^{p} \cdot u_{j}^{p + 1} + \kappa_{b} \sum_{p=2}^{M} u_{i}^{p} \cdot u_{j}^{p - 1} \right]
+        \label{eq:population_weights_sam} \end{equation}
+
+        where:
+
+        \begin{tabular}{l} \\
+            \(u \in \Z_{[0, 1]}\) is the activity state of a population. \\
+        \label{tab:conditions_population_weights} \end{tabular} \bigskip
+
+\subsubsection{Noise}
+
+    Unmodulated Gaussian noise \(\xi\) is computed as before.
+    % Unmodulated Gaussian noise \(\xi^{*}\) is computed with different variance \(\sigma_{\pi}^{2}\):
+% 
+    %     \begin{equation}
+    %         \sigma_{\pi}^{2} = \frac{\sigma^{2}}{\sqrt{N_{\pi}}}
+    %     \label{eq:population_noise_sd} \end{equation}
+% 
+    %     where:
+% 
+    %     \begin{tabular}{l} \\
+    %         \(\mu \in \R\) is the noise mean, \\
+    %         \(\sigma \in \R_{\geqslant 0}\) is the noise standard deviation.
+    %     \label{tab:conditions_noise_sd} \end{tabular} \bigskip
+% 
+    % Probability density function remains the same as in equation \ref{eq:noise}, with \(\sigma = \sigma_{\pi}\).
+
+
+%         Unmodulated noise values are then scaled using according to \(N_{\pi}\), and an extra parameter \(\eta\) to achieve replication:
+%
+%         \begin{equation}
+%             \xi = \frac{\xi^{*} \cdot \eta}{N_{\pi}}
+%         \label{eq:population_noise} \end{equation}
+%
+%         where:
+%
+%         \begin{tabular}{l} \\
+%             \(\xi^{*} \in \R\) is the unmodulated noise, \\
+%             \(\eta \in \R\) is the noise modulation parameter.
+%         \label{tab:conditions_population_noise} \end{tabular} \bigskip
+
+
+\subsection{Simulation}
+
+Simulation is carried away with population-level conditions (subsection \ref{subsec:population_dynamics}).
+Calculations are then based on a \(M \times U\) matrix instead of a much larger \(M \times N\) matrix.
+Computation time now scales with \(M\) instead of \(N\) but for very large values of \(N\), which would also increase the number of populations.
+Recanatesi \textit{et al.} \parencite{recanatesi2015} estimated this method to be 99.9\% faster than simulating individual neurons.
+
+Firing rates are initialized at \(r_{ini}\) for populations encoding a randomly chosen memory pattern.
+Currents are set at \(r_{ini}^{\rfrac{1}{\gamma}}\).
+All weights are also defined at this stage.
+Values of noise and inhibition change per time step.
+Neuron currents and firing rates are then calculated at each time step as well.
+
+A memory is considered recalled if the average firing rate of all encoding neurons is above \(r_{recall}\).
+The network is said to recall a certain memory \(p\) if the former condition is ever fulfilled for that memory during the simulation time.
+
+Table \ref{table:hyperparameters} summarizes all hyperparameters used in the simulation.
+
+\subsection{Recall Analysis}
+
+The network was simulated first at a smaller scale and for one trial to observe detailed dynamics.
+It was then scaled to computer clusters, allowing to reach a total of 10,000 simulations for each condition needed for memory recall analysis.
+Each network is simulated for a total of 450 time cycles.
+
+Several metrics are computed to assess the recall performance of the model.
+In particular, inter-retrieval time (IRT) is calculated as the number of time cycles until the recall of a new memory item.
+Other performance metrics such as memory size intersections or the average total recalls are also analyzed.
+
+\subsection{Computational Tools}
+
+Replication was carried out using Python 3.8.5 with packages NumPy 1.19.1, pandas 1.0.5, matplotlib 3.3.0, SciPy 1.5.2, and tqdm 4.48.0 on Parabola GNU/Linux-libre and CentOS GNU/Linux.

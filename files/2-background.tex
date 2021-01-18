@@ -1,0 +1,24 @@
+\section{Background}
+
+% Description
+Hopfield \parencite{hopfield1982} proposed a model in which memory storage and retrieval emerge as properties of the collective behavior of its units, or neurons.
+This connectionist model is capable of recovering a previously presented pattern or patterns from partial cues, being able to complete the missing information. 
+
+Hopfield networks behave as fixed-point attractor networks as their internal state evolves towards a stable single state or fixed point.
+This is given by their energy function.
+These types of systems have been used as models of associative memory \parencite{amit1992}.
+
+% Currents
+In the classic model as described by Hopfield \parencite{hopfield1982}, neurons are binary units: the activation state of each neuron can be either firing or not (on or off). The activity of each unit asynchronously changes in a discrete time scale.
+
+% Weights
+As in other connectionist systems, the strength of connections between nodes is described by its weight matrix.
+Weights are only updated upon network initialization and depend on the patterns presented to all network units.
+The weight matrix takes the shape of a square, symmetric matrix in which all the values in the main diagonal are always zero.
+All neurons are connected to each other.
+Also, every neuron is both an input and output node for memory pattern presentation and retrieval.
+To compose the weight matrix, each node is updated according to a local incremental learning rule, related to Hebbian learning.
+Hebb's rule states that neurons that fire together when a certain pattern is present strengthen the connections between them \parencite{hebb1949}.
+
+% Modifications
+In the work by Recantesi \textit{et al.} \parencite{recanatesi2015}, modifications to the original Hopfield model have been introduced, with new properties of memory retrieval: the model was adapted to induce transitions between attractor states (recalled memories).
