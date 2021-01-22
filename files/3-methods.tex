@@ -13,12 +13,12 @@ The original paper described the dynamics of neuron \(\nu_{i}\) as the change of
         where:
 
         \begin{tabular}{l} \\
-            \(\tau \in \R\) is the decay time, \\
-            \(c \in \R\) is the synaptic current, \\
-            \(N \in \N\) is the network number of neurons, \\
+            \(\tau \in \mathbb{R}\) is the decay time, \\
+            \(c \in \mathbb{R}\) is the synaptic current, \\
+            \(N \in \mathbb{N}\) is the network number of neurons, \\
             \(W\) is the weight matrix, \\
-            \(r \in \R\) is the firing rates, \\
-            \(\xi \in \R\) is the Gaussian noise.
+            \(r \in \mathbb{R}\) is the firing rates, \\
+            \(\xi \in \mathbb{R}\) is the Gaussian noise.
         \label{tab:conditions_continuous_dynamics} \end{tabular}
 
 
@@ -32,7 +32,7 @@ The original paper described the dynamics of neuron \(\nu_{i}\) as the change of
         where:
 
         \begin{tabular}{l}
-            \(dt \in \R\) is the integration time step
+            \(dt \in \mathbb{R}\) is the integration time step
         \label{tab:conditions_discrete_dynamics} \end{tabular}
 
 \subsubsection{Firing Rates}
@@ -50,8 +50,8 @@ Firing rates \(r\) of each neuron are calculated by the gain function \(g(c)\), 
         where:
 
         \begin{tabular}{l} \\
-            \(\theta \in \R\) is the gain function threshold, \\
-            \(\gamma \in \R_{<1}\) is the gain function exponent. \\
+            \(\theta \in \mathbb{R}\) is the gain function threshold, \\
+            \(\gamma \in \mathbb{R}_{<1}\) is the gain function exponent. \\
         \label{tab:conditions_firing_rates} \end{tabular} \bigskip
 
 
@@ -94,8 +94,8 @@ The different states are stored in a \(M \times N\) matrix, with shape:
 
         \begin{tabular}{l} \\
             %\(A \in \R_{>0}\) is the amplitude, \\
-            \(\phi_{min} \in \R\) is the minimum inhibition hyperparameter, \\
-            \(\phi_{max} \in \R\) is the maximum inhibition hyperparameter, \\
+            \(\phi_{min} \in \mathbb{R}\) is the minimum inhibition hyperparameter, \\
+            \(\phi_{max} \in \mathbb{R}\) is the maximum inhibition hyperparameter, \\
             %\(p_{\phi} \in \R\) is the oscillation phase shift, \\
             %\(t_{\phi} \in \R\) is the oscillation time. \\
         \label{tab:conditions_sine_wave} \end{tabular} \bigskip
@@ -126,12 +126,12 @@ The different states are stored in a \(M \times N\) matrix, with shape:
         where:
 
         \begin{tabular}{l} \\
-            \(\kappa \in \R_{\geqslant 0}\) is the excitation, \\
-            \(M \in \N\) is the number of memories, \\
-            \(s \in \Z_{[0, 1]}\) is the neuron state for a memory, \\
+            \(\kappa \in \mathbb{R}_{\geqslant 0}\) is the excitation, \\
+            \(M \in \mathbb{N}\) is the number of memories, \\
+            \(s \in \mathbb{Z}_{[0, 1]}\) is the neuron state for a memory, \\
             \(p\) is the memory pattern, \\
-            \(f \in \R\) is the sparsity, \\
-            \(\phi \in \R\) is the oscillatory inhibition.
+            \(f \in \mathbb{R}\) is the sparsity, \\
+            \(\phi \in \mathbb{R}\) is the oscillatory inhibition.
         \label{tab:conditions_weights} \end{tabular} \bigskip
 
 
@@ -144,8 +144,8 @@ The different states are stored in a \(M \times N\) matrix, with shape:
         where:
 
         \begin{tabular}{l} \\
-            \(\kappa_{f} \in \R\) is the forward contiguity, \\
-            \(\kappa_{b} \in \R\) is the backward contiguity. \\
+            \(\kappa_{f} \in \mathbb{R}\) is the forward contiguity, \\
+            \(\kappa_{b} \in \mathbb{R}\) is the backward contiguity. \\
         \label{tab:conditions_weights_sam} \end{tabular} \bigskip
 
 
@@ -161,8 +161,9 @@ The different states are stored in a \(M \times N\) matrix, with shape:
         where:
 
         \begin{tabular}{l} \\
-            \(\mu \in \R\) is the noise mean, \\
-            \(\sigma \in \R_{\geqslant 0}\) is the noise standard deviation.
+            \(\mu \in \mathbb{R}\) is the noise mean, \\
+            \(\sigma \in \
+            \mathbb{R}_{\geqslant 0}\) is the noise standard deviation.
         \label{tab:conditions_noise} \end{tabular} \bigskip
 
 
@@ -186,7 +187,7 @@ The different states are stored in a \(M \times N\) matrix, with shape:
         where:
 
         \begin{tabular}{l} \\
-            \(N_{\pi} \in \N\) is the number of neurons in a population. \\
+            \(N_{\pi} \in \mathbb{N}\) is the number of neurons in a population. \\
         \label{tab:fraction_neurons_pop} \end{tabular} \bigskip
 
 
@@ -199,7 +200,7 @@ The different states are stored in a \(M \times N\) matrix, with shape:
         where:
 
         \begin{tabular}{l} \\
-            \(U \in \N\) is the number of unique populations. \\
+            \(U \in \mathbb{N}\) is the number of unique populations. \\
         \label{tab:conditions_population_current} \end{tabular} \bigskip
 
 
@@ -270,7 +271,7 @@ Inhibition calculation remains unchanged for the simulation with populations.
         where:
 
         \begin{tabular}{l} \\
-            \(u \in \Z_{[0, 1]}\) is the activity state of a population. \\
+            \(u \in \mathbb{Z}_{[0, 1]}\) is the activity state of a population. \\
         \label{tab:conditions_population_weights} \end{tabular} \bigskip
 
 \subsubsection{Noise}
@@ -314,7 +315,7 @@ Computation time now scales with \(M\) instead of \(N\) but for very large value
 Recanatesi \textit{et al.} \parencite{recanatesi2015} estimated this method to be 99.9\% faster than simulating individual neurons.
 
 Firing rates are initialized at \(r_{ini}\) for populations encoding a randomly chosen memory pattern.
-Currents are set at \(r_{ini}^{\rfrac{1}{\gamma}}\).
+Currents are set at \(r_{ini}^{\frac{1}{\gamma}}\).
 All weights are also defined at this stage.
 Values of noise and inhibition change per time step.
 Neuron currents and firing rates are then calculated at each time step as well.
