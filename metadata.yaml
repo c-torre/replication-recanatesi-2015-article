@@ -45,8 +45,8 @@ code:
 #   see https://guides.github.com/activities/citable-code/
 code:
   - url: https://github.com/c-torre/replication-recanatesi-2015
-  - doi: https://doi.org/10.5281/zenodo.4396275
-  - swh: https://archive.softwareheritage.org/browse/origin/directory/?origin_url=https://github.com/c-torre/replication-recanatesi-2015/
+  - doi:
+  - swh: swh:1:dir:0b541aeb4707ecedfbbcdd85adfd0100d748cc03
 
 # Date URL and DOI (optional if no data)
 data:
@@ -103,17 +103,17 @@ contributors:
 dates:
   - received: 08 November 2019
   - accepted: 11 September 2020
-  - published: 11 September 2020
+  - published: 25 January 2021
 
 # This information will be provided by the editor
 article:
-  - number: # Article number will be automatically assigned during publication
-  - doi:    # DOI from Zenodo
-  - url:    # Final PDF URL (Zenodo or rescience website?)
+  - number: 8
+  - doi: 10.5281/zenodo.4461767
+  - url: https://zenodo.org/record/4461767/files/article.pdf
 
 # This information will be provided by the editor
 journal:
   - name:   "ReScience C"
   - issn:   2430-3658
-  - volume: 4
-  - issue:  1
+  - volume: 6
+  - issue:  3
